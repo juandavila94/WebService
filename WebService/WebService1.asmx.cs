@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
-
+﻿using System.Web.Services;
+using CapaAplicacion;
+using System.Web.Script.Serialization;
+using System.Web.Script.Services;
 namespace WebService
 {
     /// <summary>
@@ -16,11 +14,20 @@ namespace WebService
     // [System.Web.Script.Services.ScriptService]
     public class WebService1 : System.Web.Services.WebService
     {
+        Paquete paquete = new Paquete();
 
         [WebMethod]
         public string HelloWorld()
         {
             return "Hello World";
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public object ConsultarPaquete()
+        {
+            return new JavaScriptSerializer().Serialize(paquete.Consultar());
+           
         }
     }
 }

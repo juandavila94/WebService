@@ -12,6 +12,8 @@ namespace CapaDatos
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class IS2Entities : DbContext
     {
@@ -26,5 +28,100 @@ namespace CapaDatos
         }
     
         public virtual DbSet<paquete> paquete { get; set; }
+    
+        public virtual ObjectResult<consultar_Result> consultar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<consultar_Result>("consultar");
+        }
+    
+        public virtual ObjectResult<consultarPorDestinatario_Result> consultarPorDestinatario(string destinatario)
+        {
+            var destinatarioParameter = destinatario != null ?
+                new ObjectParameter("destinatario", destinatario) :
+                new ObjectParameter("destinatario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<consultarPorDestinatario_Result>("consultarPorDestinatario", destinatarioParameter);
+        }
+    
+        public virtual ObjectResult<consultarPorFecha_Result> consultarPorFecha(Nullable<System.DateTime> fecha)
+        {
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("fecha", fecha) :
+                new ObjectParameter("fecha", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<consultarPorFecha_Result>("consultarPorFecha", fechaParameter);
+        }
+    
+        public virtual ObjectResult<consultarPorRemitente_Result> consultarPorRemitente(string remitente)
+        {
+            var remitenteParameter = remitente != null ?
+                new ObjectParameter("remitente", remitente) :
+                new ObjectParameter("remitente", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<consultarPorRemitente_Result>("consultarPorRemitente", remitenteParameter);
+        }
+    
+        public virtual int eliminar(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("eliminar", idParameter);
+        }
+    
+        public virtual int insertar(string destinatario, string remitente, string tipo, Nullable<int> cantidad, string estado)
+        {
+            var destinatarioParameter = destinatario != null ?
+                new ObjectParameter("destinatario", destinatario) :
+                new ObjectParameter("destinatario", typeof(string));
+    
+            var remitenteParameter = remitente != null ?
+                new ObjectParameter("remitente", remitente) :
+                new ObjectParameter("remitente", typeof(string));
+    
+            var tipoParameter = tipo != null ?
+                new ObjectParameter("tipo", tipo) :
+                new ObjectParameter("tipo", typeof(string));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            var estadoParameter = estado != null ?
+                new ObjectParameter("estado", estado) :
+                new ObjectParameter("estado", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insertar", destinatarioParameter, remitenteParameter, tipoParameter, cantidadParameter, estadoParameter);
+        }
+    
+        public virtual int modificar(Nullable<int> id, string destinatario, string remitente, string tipo, Nullable<int> cantidad, string estado)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var destinatarioParameter = destinatario != null ?
+                new ObjectParameter("destinatario", destinatario) :
+                new ObjectParameter("destinatario", typeof(string));
+    
+            var remitenteParameter = remitente != null ?
+                new ObjectParameter("remitente", remitente) :
+                new ObjectParameter("remitente", typeof(string));
+    
+            var tipoParameter = tipo != null ?
+                new ObjectParameter("tipo", tipo) :
+                new ObjectParameter("tipo", typeof(string));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            var estadoParameter = estado != null ?
+                new ObjectParameter("estado", estado) :
+                new ObjectParameter("estado", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("modificar", idParameter, destinatarioParameter, remitenteParameter, tipoParameter, cantidadParameter, estadoParameter);
+        }
     }
 }

@@ -12,10 +12,39 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="destinatario" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="remitente" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="fecha" Type="datetime2" Precision="7" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="tipo" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="100" />
         </EntityType>
+        <Function Name="consultar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="consultarPorDestinatario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="destinatario" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="consultarPorFecha" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fecha" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="consultarPorRemitente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="remitente" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="insertar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="destinatario" Type="varchar" Mode="In" />
+          <Parameter Name="remitente" Type="varchar" Mode="In" />
+          <Parameter Name="tipo" Type="varchar" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="modificar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="destinatario" Type="varchar" Mode="In" />
+          <Parameter Name="remitente" Type="varchar" Mode="In" />
+          <Parameter Name="tipo" Type="varchar" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="estado" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="IS2ModelStoreContainer">
           <EntitySet Name="paquete" EntityType="Self.paquete" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -31,13 +60,78 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="destinatario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="remitente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Precision="7" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="tipo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="IS2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="paquete" EntityType="Self.paquete" />
+          <FunctionImport Name="consultar" ReturnType="Collection(IS2Model.consultar_Result)" />
+          <FunctionImport Name="consultarPorDestinatario" ReturnType="Collection(IS2Model.consultarPorDestinatario_Result)">
+            <Parameter Name="destinatario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="consultarPorFecha" ReturnType="Collection(IS2Model.consultarPorFecha_Result)">
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="consultarPorRemitente" ReturnType="Collection(IS2Model.consultarPorRemitente_Result)">
+            <Parameter Name="remitente" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="eliminar">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="insertar">
+            <Parameter Name="destinatario" Mode="In" Type="String" />
+            <Parameter Name="remitente" Mode="In" Type="String" />
+            <Parameter Name="tipo" Mode="In" Type="String" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="modificar">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="destinatario" Mode="In" Type="String" />
+            <Parameter Name="remitente" Mode="In" Type="String" />
+            <Parameter Name="tipo" Mode="In" Type="String" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="consultar_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="destinatario" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="remitente" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="fecha" Nullable="false" Precision="23" />
+          <Property Type="String" Name="tipo" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+          <Property Type="String" Name="estado" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="consultarPorDestinatario_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="destinatario" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="remitente" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="fecha" Nullable="false" Precision="23" />
+          <Property Type="String" Name="tipo" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+          <Property Type="String" Name="estado" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="consultarPorFecha_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="destinatario" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="remitente" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="fecha" Nullable="false" Precision="23" />
+          <Property Type="String" Name="tipo" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+          <Property Type="String" Name="estado" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="consultarPorRemitente_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="destinatario" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="remitente" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="fecha" Nullable="false" Precision="23" />
+          <Property Type="String" Name="tipo" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+          <Property Type="String" Name="estado" Nullable="true" MaxLength="100" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -53,9 +147,65 @@
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="consultar" FunctionName="IS2Model.Store.consultar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IS2Model.consultar_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="destinatario" ColumnName="destinatario" />
+                <ScalarProperty Name="remitente" ColumnName="remitente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="consultarPorDestinatario" FunctionName="IS2Model.Store.consultarPorDestinatario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IS2Model.consultarPorDestinatario_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="destinatario" ColumnName="destinatario" />
+                <ScalarProperty Name="remitente" ColumnName="remitente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="consultarPorFecha" FunctionName="IS2Model.Store.consultarPorFecha">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IS2Model.consultarPorFecha_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="destinatario" ColumnName="destinatario" />
+                <ScalarProperty Name="remitente" ColumnName="remitente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="consultarPorRemitente" FunctionName="IS2Model.Store.consultarPorRemitente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IS2Model.consultarPorRemitente_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="destinatario" ColumnName="destinatario" />
+                <ScalarProperty Name="remitente" ColumnName="remitente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="eliminar" FunctionName="IS2Model.Store.eliminar" />
+          <FunctionImportMapping FunctionImportName="insertar" FunctionName="IS2Model.Store.insertar" />
+          <FunctionImportMapping FunctionImportName="modificar" FunctionName="IS2Model.Store.modificar" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

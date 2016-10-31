@@ -4,8 +4,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CA2D1D33-A89E-4A4B-9F0C-62F129673EED}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{85F99AEA-5BCC-4383-8D57-B04E0CEED0F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CapaDatos</RootNamespace>
     <AssemblyName>CapaDatos</AssemblyName>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
     <EntityDeploy Include="modelo.edmx">
@@ -44,6 +47,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="consultarPorDestinatario_Result.cs">
+      <DependentUpon>modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="consultarPorFecha_Result.cs">
+      <DependentUpon>modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="consultarPorRemitente_Result.cs">
+      <DependentUpon>modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="consultar_Result.cs">
+      <DependentUpon>modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatosPaquete.cs" />
     <Compile Include="modelo.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,6 +96,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="modelo.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>modelo.edmx</DependentUpon>
@@ -90,9 +109,6 @@
       <DependentUpon>modelo.edmx</DependentUpon>
       <LastGenOutput>modelo.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

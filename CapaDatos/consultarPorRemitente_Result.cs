@@ -10,9 +10,8 @@
 namespace CapaDatos
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class paquete
+    public partial class consultarPorRemitente_Result
     {
         public int id { get; set; }
         public string destinatario { get; set; }
