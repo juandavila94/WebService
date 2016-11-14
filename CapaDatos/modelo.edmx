@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="IS2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="IS2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="paquete">
           <Key>
             <PropertyRef Name="id" />
@@ -12,7 +12,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="destinatario" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="remitente" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="fecha" Type="date" Nullable="false" />
           <Property Name="tipo" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="cantidad" Type="int" Nullable="false" />
           <Property Name="estado" Type="varchar" MaxLength="100" />
@@ -22,7 +22,7 @@
           <Parameter Name="destinatario" Type="varchar" Mode="In" />
         </Function>
         <Function Name="consultarPorFecha" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="fecha" Type="datetime" Mode="In" />
+          <Parameter Name="fecha" Type="date" Mode="In" />
         </Function>
         <Function Name="consultarPorRemitente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="remitente" Type="varchar" Mode="In" />
@@ -48,8 +48,7 @@
         <EntityContainer Name="IS2ModelStoreContainer">
           <EntitySet Name="paquete" EntityType="Self.paquete" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IS2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -60,7 +59,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="destinatario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="remitente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="tipo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cantidad" Type="Int32" Nullable="false" />
           <Property Name="estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -69,16 +68,16 @@
           <EntitySet Name="paquete" EntityType="Self.paquete" />
           <FunctionImport Name="consultar" ReturnType="Collection(IS2Model.consultar_Result)" />
           <FunctionImport Name="consultarPorDestinatario" ReturnType="Collection(IS2Model.consultarPorDestinatario_Result)">
-            <Parameter Name="destinatario" Mode="In" Type="String" />
+          <Parameter Name="destinatario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="consultarPorFecha" ReturnType="Collection(IS2Model.consultarPorFecha_Result)">
-            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          <Parameter Name="fecha" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="consultarPorRemitente" ReturnType="Collection(IS2Model.consultarPorRemitente_Result)">
-            <Parameter Name="remitente" Mode="In" Type="String" />
+          <Parameter Name="remitente" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="eliminar">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="insertar">
             <Parameter Name="destinatario" Mode="In" Type="String" />

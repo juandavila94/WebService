@@ -37,14 +37,14 @@ namespace CapaDatos
 
         public object Consultar()
         {
-                return bd.consultar();          
+                return bd.consultar().ToList();
         }
 
         public object ConsultarPorFecha(DateTime fecha)
         {
             using (var bd = new IS2Entities())
             {
-                var courseList = bd.consultarPorFecha(fecha);
+                var courseList = bd.consultarPorFecha(fecha.Date).ToList();
                 bd.SaveChanges();
                 return courseList;
             }
@@ -54,7 +54,7 @@ namespace CapaDatos
         {
             using (var bd = new IS2Entities())
             {
-                var courseList = bd.consultarPorRemitente(remitente);
+                var courseList = bd.consultarPorRemitente(remitente).ToList();
                 bd.SaveChanges();
                 return courseList;
             }
@@ -63,7 +63,7 @@ namespace CapaDatos
         {
             using (var bd = new IS2Entities())
             {
-                var courseList = bd.consultarPorDestinatario(destinatario);
+                var courseList = bd.consultarPorDestinatario(destinatario).ToList();
                 bd.SaveChanges();
                 return courseList;
             }
