@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace MVC.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -26,5 +27,15 @@ namespace MVC.Controllers
 
             return View();
         }
+
+        public ActionResult ConsultarPaquete()
+        {
+            ServiceReference1.WebService1SoapClient cliente = new ServiceReference1.WebService1SoapClient();
+            cliente.ConsultarPaquete();
+            return View();
+        }
+
+
+
     }
 }

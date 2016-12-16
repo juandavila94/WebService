@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+
+
 
 namespace WS
 {
@@ -20,6 +23,7 @@ namespace WS
     public class WebService1 : System.Web.Services.WebService
     {
 
+        
         [WebMethod]
         public string HelloWorld()
         {
@@ -36,7 +40,10 @@ namespace WS
             Context.Response.ContentType = "application/json";
             string json = "";
             var lista = paquete.Consultar();
-            Context.Response.Write(jss.Serialize(lista));
+            json = jss.Serialize(lista);
+            json = Regex.Replace(json, @"\""\\/Date\((-?\d+)\)\\/\""", "$1");
+            json.Replace(@"\", string.Empty);
+            Context.Response.Write(json);
         }
 
         [WebMethod]
