@@ -49,6 +49,10 @@
       <Project>{85f99aea-5bcc-4383-8d57-b04e0ceed0f3}</Project>
       <Name>CapaDatos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CapaInyeccionDependencias\CapaInyeccionDependencias.csproj">
+      <Project>{d58a860b-9ec5-483c-a2b1-34547c1bd580}</Project>
+      <Name>CapaInyeccionDependencias</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

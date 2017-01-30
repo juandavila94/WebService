@@ -1,11 +1,21 @@
-﻿@model IEnumerable<MVC.Models.Paquete>
+﻿
+@model IEnumerable<MVC.Models.Paquete>
 
 @{
     ViewBag.Title = "ConsultarPorRemitente";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Consultar</h2>
+<h2>ConsultarPorRemitente</h2>
+
+
+@using (Html.BeginForm())
+{
+    <p>
+        Remitente: @Html.TextBox("remitente")
+        <input type="submit" value="Search" />
+    </p>
+}
 
 
 <table class="table">
@@ -32,7 +42,7 @@
     </tr>
 
     @foreach (var item in Model)
-    {
+            {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.destinatario)
@@ -57,3 +67,5 @@
     }
 
 </table>
+        </div>
+

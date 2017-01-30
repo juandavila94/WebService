@@ -228,6 +228,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Imagenes\logo.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -297,9 +298,9 @@
     <Content Include="Views\Paquete\Modificar.cshtml" />
     <Content Include="Views\Paquete\View.cshtml" />
     <Content Include="Views\Paquete\Consultar.cshtml" />
+    <Content Include="Views\Paquete\ConsultarPorDestintario.cshtml" />
     <Content Include="Views\Paquete\ConsultarPorRemitente.cshtml" />
     <Content Include="Views\Paquete\ConsultarPorFecha.cshtml" />
-    <Content Include="Views\Paquete\ConsultarPorDestintario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

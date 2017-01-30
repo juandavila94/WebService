@@ -1,60 +1,71 @@
-﻿@model IEnumerable<MVC.Models.Paquete>
+﻿
+@model IEnumerable<MVC.Models.Paquete>
 
 @{
-    ViewBag.Title = "ConsultarPorDestintario";
+    ViewBag.Title = "ConsultarPorDestinatario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>ConsultarPorDestintario</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.destinatario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.remitente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fecha)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tipo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cantidad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.estado)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.destinatario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.remitente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fecha)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tipo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.estado)
-        </td>
-       
-    </tr>
+@using (Html.BeginForm())
+{
+    <p>
+        Destinatario: @Html.TextBox("destintario")
+        <input type="submit" value="Search" />
+    </p>
 }
 
-</table>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.destinatario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.remitente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.estado)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.destinatario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.remitente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.estado)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+        </div>
+ 

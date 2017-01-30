@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace MVC.Controllers
 {
-    public class PaqueteController : Controller
+    public class PaqueteController : Controller,InyectorDependencias
     {
         //private IPaquete _paquete;
         //public HomeController(IPaquete _paquete) {
@@ -67,10 +67,10 @@ namespace MVC.Controllers
             return View(temp);
         }
 
-        [HttpGet]
+
         public async Task<ActionResult> ConsultarPorRemitente(string remitente)
         {
-            remitente = "udla";
+            //remitente = "udla";
             ViewBag.Message = "Your products page.";
             Paquete product = new Paquete();
             string urlAction = String.Format("WebService1.asmx/ConsultarPaquete");
@@ -86,12 +86,11 @@ namespace MVC.Controllers
             List<Paquete> temp = JsonConvert.DeserializeObject<List<Paquete>>(lista);
             return View(temp);
         }
-
-        [HttpGet]
+        
         public async Task<ActionResult> ConsultarPorDestintario(string destintario)
         {
-            destintario = "marco";
-            ViewBag.Message = "Your products page.";
+         
+         ViewBag.Message = "Your products page.";
             Paquete product = new Paquete();
             string urlAction = String.Format("WebService1.asmx/ConsultarPaquete");
             var client = new HttpClient();
@@ -107,25 +106,41 @@ namespace MVC.Controllers
             return View(temp);
         }
 
-        [HttpGet]
+  
         public async Task<ActionResult> ConsultarPorFecha(string fecha)
         {
-            fecha = "24/10/2016";
-            DateTime fecha2 = Convert.ToDateTime(fecha);
+            //fecha = "2016-10-24";
+            //DateTime fecha = Convert.ToDateTime(fecha);
+            if (fecha != null)
+            {
+                ViewBag.Message = "Your products page.";
+                Paquete product = new Paquete();
+                string urlAction = String.Format("WebService1.asmx/ConsultarPaquete");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(@"http://localhost/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(string.Format("WebService1.asmx/ConsultarPaquetePorFecha?fecha={0}", fecha));
+
+                response.EnsureSuccessStatusCode();
+                string lista = response.Content.ReadAsStringAsync().Result;
+                List<Paquete> temp = JsonConvert.DeserializeObject<List<Paquete>>(lista);
+                return View(temp);
+            }
+            else
             ViewBag.Message = "Your products page.";
-            Paquete product = new Paquete();
-            string urlAction = String.Format("WebService1.asmx/ConsultarPaquete");
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(@"http://localhost/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = await client.GetAsync(string.Format("WebService1.asmx/ConsultarPaquetePorFecha?fecha={0}", fecha));
-
-            response.EnsureSuccessStatusCode();
-            string lista = response.Content.ReadAsStringAsync().Result;
-            List<Paquete> temp = JsonConvert.DeserializeObject<List<Paquete>>(lista);
-            return View(temp);
+            Paquete product2 = new Paquete();
+            string urlAction2 = String.Format("WebService1.asmx/ConsultarPaquete");
+            var client2 = new HttpClient();
+            client2.BaseAddress = new Uri(@"http://localhost/");
+            client2.DefaultRequestHeaders.Accept.Clear();
+            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response2= await client2.GetAsync(urlAction2);
+            response2.EnsureSuccessStatusCode();
+            string lista2 = response2.Content.ReadAsStringAsync().Result;
+            List<Paquete> temp2 = JsonConvert.DeserializeObject<List<Paquete>>(lista2);
+            return View(temp2);
         }
 
     }

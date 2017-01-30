@@ -1,6 +1,7 @@
 ﻿using System;
 using CapaDatos;
-     
+
+
 namespace CapaAplicacion
 {
     public class Paquete
